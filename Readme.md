@@ -17,10 +17,6 @@ The project consists of three main components:
    - Handles user authentication and task management
    - Runs on port 8000
 
-3. **Logger Service** (Node.js)
-   - MongoDB-based logging service
-   - Runs on port 5000
-   - Handles application logging
 
 ## Prerequisites
 
@@ -46,28 +42,15 @@ composer install
 php artisan serve
 ```
 
-### Logger Service Setup
-```bash
-cd logger-service
-npm install
-node index.js
-```
-
 ## Running the Application
 
-1. Start the Logger Service:
-   ```bash
-   cd logger-service
-   node index.js
-   ```
-
-2. Start the Backend:
+1. Start the Backend:
    ```bash
    cd backend
    php artisan serve
    ```
 
-3. Start the Frontend:
+2. Start the Frontend:
    ```bash
    cd frontend
    npm start
@@ -76,7 +59,6 @@ node index.js
 The application will be available at:
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:8000
-- Logger Service: http://localhost:5000
 
 ## Features
 
@@ -99,8 +81,3 @@ The application will be available at:
   - Laravel
   - PHP
   - RESTful API
-
-- **Logger Service**:
-  - Node.js
-  - MongoDB
-  - Express
