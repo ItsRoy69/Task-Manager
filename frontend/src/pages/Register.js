@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axios from '../api/axios';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +21,7 @@ const Register = () => {
     console.log('Registration form submitted with data:', formData);
     try {
       console.log('Attempting to register user...');
-      const response = await axios.post('http://localhost:8000/api/register', formData);
+      const response = await axios.post('/register', formData);
       console.log('Registration response:', response.data);
       toast.success('Registration successful! Please login.');
       navigate('/login');

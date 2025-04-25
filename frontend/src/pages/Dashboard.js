@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axios from '../api/axios';
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -16,14 +16,12 @@ const Dashboard = () => {
   
   const fetchTasks = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/tasks', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.get('/tasks');
       setTasks(response.data.tasks);
     } catch (error) {
       toast.error('Failed to fetch tasks.');
     }
-  }, [token]);
+  }, []);
   
   useEffect(() => {
     fetchTasks();
@@ -33,20 +31,16 @@ const Dashboard = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       if (editMode) {
-        await axios.put(`http://localhost:8000/api/tasks/${currentTaskId}`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await axios.put(`/tasks/${currentTaskId}`, formData);
         toast.success('Task updated successfully!');
         setEditMode(false);
         setCurrentTaskId(null);
       } else {
-        await axios.post('http://localhost:8000/api/tasks', formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await axios.post('/tasks', formData);
         toast.success('Task created successfully!');
       }
       setFormData({ title: '', description: '', status: 'Pending' });
@@ -69,9 +63,7 @@ const Dashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this task?')) {
       try {
-        await axios.delete(`http://localhost:8000/api/tasks/${id}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await axios.delete(`/tasks/${id}`);
         toast.success('Task deleted successfully!');
         fetchTasks();
       } catch (error) {
@@ -88,7 +80,7 @@ const Dashboard = () => {
             {editMode ? 'Edit Task' : 'Create New Task'}
           </div>
           <div className="card-body">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleUpdate}>
               <div className="mb-3">
                 <label className="form-label">Title</label>
                 <input
