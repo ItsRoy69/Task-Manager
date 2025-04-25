@@ -2,6 +2,9 @@
 
 A full-stack task management application built with React, Laravel, and Node.js.
 
+
+[screen-capture (14).webm](https://github.com/user-attachments/assets/932271a2-5ff4-49ca-8bea-46508cee2ef6)
+
 ## Project Structure
 
 The project consists of three main components:
