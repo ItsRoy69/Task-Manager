@@ -18,11 +18,20 @@ const Register = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Registration form submitted with data:', formData);
     try {
-      await axios.post('http://localhost:8000/api/register', formData);
+      console.log('Attempting to register user...');
+      const response = await axios.post('http://localhost:8000/api/register', formData);
+      console.log('Registration response:', response.data);
       toast.success('Registration successful! Please login.');
       navigate('/login');
     } catch (error) {
+      console.error('Registration error:', error);
+      console.error('Error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+      });
       toast.error('Registration failed. Please try again.');
     }
   };

@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 
+// Test route
+Route::get('test', function () {
+    \Log::info('Test route accessed');
+    return response()->json(['message' => 'API is working']);
+});
+
 // Auth routes
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);

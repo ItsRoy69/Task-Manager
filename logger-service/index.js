@@ -20,10 +20,11 @@ app.use(express.json());
 
 // Log Model
 const logSchema = new mongoose.Schema({
-    task_id: { type: Number, required: true },
+    task_id: { type: Number },
     user_id: { type: Number, required: true },
     action: { type: String, required: true },
-    task_data: { type: Object, required: true },
+    task_data: { type: Object },
+    auth_data: { type: Object },
     timestamp: { type: Date, default: Date.now }
 });
 
@@ -37,6 +38,21 @@ app.post('/api/logs', async (req, res) => {
         res.status(201).json({ message: 'Log created successfully', log });
     } catch (error) {
         res.status(400).json({ message: 'Error creating log', error: error.message });
+    }
+});
+
+app.post('/api/auth-logs', async (req, res) => {
+    try {
+        const log = new Log({
+            user_id: req.body.user_id || 0,
+            action: req.body.action,
+            auth_data: req.body.auth_data,
+            timestamp: new Date()
+        });
+        await log.save();
+        res.status(201).json({ message: 'Auth log created successfully', log });
+    } catch (error) {
+        res.status(400).json({ message: 'Error creating auth log', error: error.message });
     }
 });
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -14,7 +14,7 @@ const Dashboard = () => {
   
   const token = localStorage.getItem('token');
   
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/tasks', {
         headers: { Authorization: `Bearer ${token}` }
@@ -23,11 +23,11 @@ const Dashboard = () => {
     } catch (error) {
       toast.error('Failed to fetch tasks.');
     }
-  };
+  }, [token]);
   
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [fetchTasks]);
   
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
